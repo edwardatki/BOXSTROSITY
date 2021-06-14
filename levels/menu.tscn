@@ -1,0 +1,842 @@
+[gd_scene load_steps=22 format=2]
+
+[ext_resource path="res://scenes/cube_viewport.tscn" type="PackedScene" id=1]
+[ext_resource path="res://shaders/desert.tres" type="Material" id=2]
+[ext_resource path="res://shaders/cube.tres" type="Material" id=3]
+[ext_resource path="res://fonts/Early GameBoy.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://scripts/menu.gd" type="Script" id=5]
+[ext_resource path="res://scripts/button.gd" type="Script" id=6]
+[ext_resource path="res://sprites/background.png" type="Texture" id=7]
+[ext_resource path="res://sounds/button.wav" type="AudioStream" id=8]
+[ext_resource path="res://sprites/level_button.png" type="Texture" id=9]
+[ext_resource path="res://shaders/forest.tres" type="Material" id=10]
+[ext_resource path="res://shaders/tundra.tres" type="Material" id=11]
+[ext_resource path="res://scripts/level_selector.gd" type="Script" id=12]
+
+[sub_resource type="ViewportTexture" id=1]
+viewport_path = NodePath("Viewport")
+
+[sub_resource type="DynamicFont" id=2]
+outline_size = 1
+outline_color = Color( 0.258824, 0.466667, 0.490196, 1 )
+font_data = ExtResource( 4 )
+
+[sub_resource type="StyleBoxEmpty" id=3]
+
+[sub_resource type="DynamicFont" id=4]
+size = 8
+font_data = ExtResource( 4 )
+
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 9 )
+region = Rect2( 10, 0, 10, 10 )
+
+[sub_resource type="AtlasTexture" id=9]
+atlas = ExtResource( 9 )
+region = Rect2( 0, 0, 10, 10 )
+
+[sub_resource type="SpriteFrames" id=7]
+animations = [ {
+"frames": [ SubResource( 8 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 9 ) ],
+"loop": true,
+"name": "locked",
+"speed": 5.0
+} ]
+
+[sub_resource type="StyleBoxEmpty" id=11]
+
+[sub_resource type="DynamicFont" id=10]
+size = 8
+font_data = ExtResource( 4 )
+
+[node name="Menu" type="Node2D"]
+material = ExtResource( 10 )
+script = ExtResource( 5 )
+
+[node name="ButtonAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
+bus = "FX"
+
+[node name="Background" type="Sprite" parent="."]
+use_parent_material = true
+scale = Vector2( 100, 100 )
+z_index = -5
+texture = ExtResource( 7 )
+
+[node name="Viewport" parent="." instance=ExtResource( 1 )]
+
+[node name="Cube" type="Sprite" parent="."]
+material = ExtResource( 3 )
+position = Vector2( 48, 8 )
+texture = SubResource( 1 )
+
+[node name="Main" type="Node2D" parent="."]
+use_parent_material = true
+
+[node name="Title" type="CenterContainer" parent="Main"]
+use_parent_material = true
+margin_top = -48.0
+margin_bottom = -48.0
+use_top_left = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Main/Title"]
+margin_left = -88.0
+margin_top = -10.0
+margin_right = 88.0
+margin_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 0.847059, 0.921569, 0.854902, 1 )
+text = "BOXSTROSITY"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Play" type="CenterContainer" parent="Main"]
+use_parent_material = true
+margin_left = -40.0
+margin_top = -16.0
+margin_right = -40.0
+margin_bottom = -16.0
+use_top_left = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="Main/Play"]
+use_parent_material = true
+margin_left = -16.0
+margin_top = -5.0
+margin_right = 16.0
+margin_bottom = 5.0
+focus_neighbour_bottom = NodePath("../../Options/Button")
+custom_styles/hover = SubResource( 3 )
+custom_styles/pressed = SubResource( 3 )
+custom_styles/focus = SubResource( 3 )
+custom_styles/disabled = SubResource( 3 )
+custom_styles/normal = SubResource( 3 )
+custom_fonts/font = SubResource( 4 )
+text = "PLAY"
+script = ExtResource( 6 )
+
+[node name="LevelSelect" type="CenterContainer" parent="Main"]
+use_parent_material = true
+margin_left = -40.0
+margin_top = 8.0
+margin_right = -40.0
+margin_bottom = 8.0
+use_top_left = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="Main/LevelSelect"]
+use_parent_material = true
+margin_left = -46.0
+margin_top = -5.0
+margin_right = 46.0
+margin_bottom = 5.0
+focus_neighbour_bottom = NodePath("../../Options/Button")
+custom_styles/hover = SubResource( 3 )
+custom_styles/pressed = SubResource( 3 )
+custom_styles/focus = SubResource( 3 )
+custom_styles/disabled = SubResource( 3 )
+custom_styles/normal = SubResource( 3 )
+custom_fonts/font = SubResource( 4 )
+text = "LEVEL SELECT"
+script = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Exit" type="CenterContainer" parent="Main"]
+use_parent_material = true
+margin_left = -40.0
+margin_top = 32.0
+margin_right = -40.0
+margin_bottom = 32.0
+use_top_left = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="Main/Exit"]
+use_parent_material = true
+margin_left = -16.0
+margin_top = -5.0
+margin_right = 16.0
+margin_bottom = 5.0
+focus_neighbour_bottom = NodePath("../../Options/Button")
+custom_styles/hover = SubResource( 3 )
+custom_styles/pressed = SubResource( 3 )
+custom_styles/focus = SubResource( 3 )
+custom_styles/disabled = SubResource( 3 )
+custom_styles/normal = SubResource( 3 )
+custom_fonts/font = SubResource( 4 )
+text = "EXIT"
+script = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LevelSelect" type="Node2D" parent="."]
+visible = false
+use_parent_material = true
+
+[node name="Title" type="CenterContainer" parent="LevelSelect"]
+use_parent_material = true
+margin_top = -48.0
+margin_bottom = -48.0
+use_top_left = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="LevelSelect/Title"]
+margin_left = -92.0
+margin_top = -10.0
+margin_right = 92.0
+margin_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 0.847059, 0.921569, 0.854902, 1 )
+text = "LEVEL SELECT"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="World_1" type="Node2D" parent="LevelSelect"]
+material = ExtResource( 10 )
+position = Vector2( 0, -12 )
+
+[node name="Level_01" type="AnimatedSprite" parent="LevelSelect/World_1"]
+use_parent_material = true
+position = Vector2( -60, 0 )
+frames = SubResource( 7 )
+script = ExtResource( 12 )
+
+[node name="CentreContainer" type="CenterContainer" parent="LevelSelect/World_1/Level_01"]
+use_parent_material = true
+margin_left = 1.0
+use_top_left = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="LevelSelect/World_1/Level_01/CentreContainer"]
+margin_left = -4.0
+margin_top = -5.0
+margin_right = 4.0
+margin_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+custom_styles/hover = SubResource( 11 )
+custom_styles/pressed = SubResource( 11 )
+custom_styles/focus = SubResource( 11 )
+custom_styles/disabled = SubResource( 11 )
+custom_styles/normal = SubResource( 11 )
+custom_fonts/font = SubResource( 10 )
+custom_colors/font_color = Color( 0.847059, 0.921569, 0.854902, 1 )
+custom_colors/font_color_hover = Color( 0.258824, 0.466667, 0.490196, 1 )
+custom_colors/font_color_pressed = Color( 0.121569, 0.156863, 0.231373, 1 )
+text = "0"
+
+[node name="Level_02" type="AnimatedSprite" parent="LevelSelect/World_1"]
+use_parent_material = true
+position = Vector2( -50, 0 )
+frames = SubResource( 7 )
+script = ExtResource( 12 )
+index = 2
+
+[node name="CentreContainer" type="CenterContainer" parent="LevelSelect/World_1/Level_02"]
+use_parent_material = true
+margin_left = 1.0
+use_top_left = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="LevelSelect/World_1/Level_02/CentreContainer"]
+margin_left = -4.0
+margin_top = -5.0
+margin_right = 4.0
+margin_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+custom_styles/hover = SubResource( 11 )
+custom_styles/pressed = SubResource( 11 )
+custom_styles/focus = SubResource( 11 )
+custom_styles/disabled = SubResource( 11 )
+custom_styles/normal = SubResource( 11 )
+custom_fonts/font = SubResource( 10 )
+custom_colors/font_color = Color( 0.847059, 0.921569, 0.854902, 1 )
+custom_colors/font_color_hover = Color( 0.258824, 0.466667, 0.490196, 1 )
+custom_colors/font_color_pressed = Color( 0.121569, 0.156863, 0.231373, 1 )
+text = "0"
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="Level_03" type="AnimatedSprite" parent="LevelSelect/World_1"]
+use_parent_material = true
+position = Vector2( -40, 0 )
+frames = SubResource( 7 )
+script = ExtResource( 12 )
+index = 3
+
+[node name="CentreContainer" type="CenterContainer" parent="LevelSelect/World_1/Level_03"]
+use_parent_material = true
+margin_left = 1.0
+use_top_left = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="LevelSelect/World_1/Level_03/CentreContainer"]
+margin_left = -4.0
+margin_top = -5.0
+margin_right = 4.0
+margin_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+custom_styles/hover = SubResource( 11 )
+custom_styles/pressed = SubResource( 11 )
+custom_styles/focus = SubResource( 11 )
+custom_styles/disabled = SubResource( 11 )
+custom_styles/normal = SubResource( 11 )
+custom_fonts/font = SubResource( 10 )
+custom_colors/font_color = Color( 0.847059, 0.921569, 0.854902, 1 )
+custom_colors/font_color_hover = Color( 0.258824, 0.466667, 0.490196, 1 )
+custom_colors/font_color_pressed = Color( 0.121569, 0.156863, 0.231373, 1 )
+text = "0"
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="Level_04" type="AnimatedSprite" parent="LevelSelect/World_1"]
+use_parent_material = true
+position = Vector2( -30, 0 )
+frames = SubResource( 7 )
+script = ExtResource( 12 )
+index = 4
+
+[node name="CentreContainer" type="CenterContainer" parent="LevelSelect/World_1/Level_04"]
+use_parent_material = true
+margin_left = 1.0
+use_top_left = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="LevelSelect/World_1/Level_04/CentreContainer"]
+margin_left = -4.0
+margin_top = -5.0
+margin_right = 4.0
+margin_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+custom_styles/hover = SubResource( 11 )
+custom_styles/pressed = SubResource( 11 )
+custom_styles/focus = SubResource( 11 )
+custom_styles/disabled = SubResource( 11 )
+custom_styles/normal = SubResource( 11 )
+custom_fonts/font = SubResource( 10 )
+custom_colors/font_color = Color( 0.847059, 0.921569, 0.854902, 1 )
+custom_colors/font_color_hover = Color( 0.258824, 0.466667, 0.490196, 1 )
+custom_colors/font_color_pressed = Color( 0.121569, 0.156863, 0.231373, 1 )
+text = "0"
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="Level_05" type="AnimatedSprite" parent="LevelSelect/World_1"]
+use_parent_material = true
+position = Vector2( -20, 0 )
+frames = SubResource( 7 )
+script = ExtResource( 12 )
+index = 5
+
+[node name="CentreContainer" type="CenterContainer" parent="LevelSelect/World_1/Level_05"]
+use_parent_material = true
+margin_left = 1.0
+use_top_left = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="LevelSelect/World_1/Level_05/CentreContainer"]
+margin_left = -4.0
+margin_top = -5.0
+margin_right = 4.0
+margin_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+custom_styles/hover = SubResource( 11 )
+custom_styles/pressed = SubResource( 11 )
+custom_styles/focus = SubResource( 11 )
+custom_styles/disabled = SubResource( 11 )
+custom_styles/normal = SubResource( 11 )
+custom_fonts/font = SubResource( 10 )
+custom_colors/font_color = Color( 0.847059, 0.921569, 0.854902, 1 )
+custom_colors/font_color_hover = Color( 0.258824, 0.466667, 0.490196, 1 )
+custom_colors/font_color_pressed = Color( 0.121569, 0.156863, 0.231373, 1 )
+text = "0"
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="World_2" type="Node2D" parent="LevelSelect"]
+material = ExtResource( 2 )
+
+[node name="Level_01" type="AnimatedSprite" parent="LevelSelect/World_2"]
+use_parent_material = true
+position = Vector2( -60, 0 )
+frames = SubResource( 7 )
+script = ExtResource( 12 )
+index = 6
+
+[node name="CentreContainer" type="CenterContainer" parent="LevelSelect/World_2/Level_01"]
+use_parent_material = true
+margin_left = 1.0
+use_top_left = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="LevelSelect/World_2/Level_01/CentreContainer"]
+margin_left = -4.0
+margin_top = -5.0
+margin_right = 4.0
+margin_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+custom_styles/hover = SubResource( 11 )
+custom_styles/pressed = SubResource( 11 )
+custom_styles/focus = SubResource( 11 )
+custom_styles/disabled = SubResource( 11 )
+custom_styles/normal = SubResource( 11 )
+custom_fonts/font = SubResource( 10 )
+custom_colors/font_color = Color( 0.878431, 0.854902, 0.807843, 1 )
+custom_colors/font_color_hover = Color( 1, 0.854902, 0.188235, 1 )
+custom_colors/font_color_pressed = Color( 0.258824, 0.254902, 0.219608, 1 )
+text = "0"
+
+[node name="Level_02" type="AnimatedSprite" parent="LevelSelect/World_2"]
+use_parent_material = true
+position = Vector2( -50, 0 )
+frames = SubResource( 7 )
+script = ExtResource( 12 )
+index = 7
+
+[node name="CentreContainer" type="CenterContainer" parent="LevelSelect/World_2/Level_02"]
+use_parent_material = true
+margin_left = 1.0
+use_top_left = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="LevelSelect/World_2/Level_02/CentreContainer"]
+margin_left = -4.0
+margin_top = -5.0
+margin_right = 4.0
+margin_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+custom_styles/hover = SubResource( 11 )
+custom_styles/pressed = SubResource( 11 )
+custom_styles/focus = SubResource( 11 )
+custom_styles/disabled = SubResource( 11 )
+custom_styles/normal = SubResource( 11 )
+custom_fonts/font = SubResource( 10 )
+custom_colors/font_color = Color( 0.878431, 0.854902, 0.807843, 1 )
+custom_colors/font_color_hover = Color( 1, 0.854902, 0.188235, 1 )
+custom_colors/font_color_pressed = Color( 0.258824, 0.254902, 0.219608, 1 )
+text = "0"
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="Level_03" type="AnimatedSprite" parent="LevelSelect/World_2"]
+use_parent_material = true
+position = Vector2( -40, 0 )
+frames = SubResource( 7 )
+script = ExtResource( 12 )
+index = 8
+
+[node name="CentreContainer" type="CenterContainer" parent="LevelSelect/World_2/Level_03"]
+use_parent_material = true
+margin_left = 1.0
+use_top_left = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="LevelSelect/World_2/Level_03/CentreContainer"]
+margin_left = -4.0
+margin_top = -5.0
+margin_right = 4.0
+margin_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+custom_styles/hover = SubResource( 11 )
+custom_styles/pressed = SubResource( 11 )
+custom_styles/focus = SubResource( 11 )
+custom_styles/disabled = SubResource( 11 )
+custom_styles/normal = SubResource( 11 )
+custom_fonts/font = SubResource( 10 )
+custom_colors/font_color = Color( 0.878431, 0.854902, 0.807843, 1 )
+custom_colors/font_color_hover = Color( 1, 0.854902, 0.188235, 1 )
+custom_colors/font_color_pressed = Color( 0.258824, 0.254902, 0.219608, 1 )
+text = "0"
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="Level_04" type="AnimatedSprite" parent="LevelSelect/World_2"]
+use_parent_material = true
+position = Vector2( -30, 0 )
+frames = SubResource( 7 )
+script = ExtResource( 12 )
+index = 9
+
+[node name="CentreContainer" type="CenterContainer" parent="LevelSelect/World_2/Level_04"]
+use_parent_material = true
+margin_left = 1.0
+use_top_left = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="LevelSelect/World_2/Level_04/CentreContainer"]
+margin_left = -4.0
+margin_top = -5.0
+margin_right = 4.0
+margin_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+custom_styles/hover = SubResource( 11 )
+custom_styles/pressed = SubResource( 11 )
+custom_styles/focus = SubResource( 11 )
+custom_styles/disabled = SubResource( 11 )
+custom_styles/normal = SubResource( 11 )
+custom_fonts/font = SubResource( 10 )
+custom_colors/font_color = Color( 0.878431, 0.854902, 0.807843, 1 )
+custom_colors/font_color_hover = Color( 1, 0.854902, 0.188235, 1 )
+custom_colors/font_color_pressed = Color( 0.258824, 0.254902, 0.219608, 1 )
+text = "0"
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="Level_05" type="AnimatedSprite" parent="LevelSelect/World_2"]
+use_parent_material = true
+position = Vector2( -20, 0 )
+frames = SubResource( 7 )
+script = ExtResource( 12 )
+index = 10
+
+[node name="CentreContainer" type="CenterContainer" parent="LevelSelect/World_2/Level_05"]
+use_parent_material = true
+margin_left = 1.0
+use_top_left = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="LevelSelect/World_2/Level_05/CentreContainer"]
+margin_left = -4.0
+margin_top = -5.0
+margin_right = 4.0
+margin_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+custom_styles/hover = SubResource( 11 )
+custom_styles/pressed = SubResource( 11 )
+custom_styles/focus = SubResource( 11 )
+custom_styles/disabled = SubResource( 11 )
+custom_styles/normal = SubResource( 11 )
+custom_fonts/font = SubResource( 10 )
+custom_colors/font_color = Color( 0.878431, 0.854902, 0.807843, 1 )
+custom_colors/font_color_hover = Color( 1, 0.854902, 0.188235, 1 )
+custom_colors/font_color_pressed = Color( 0.258824, 0.254902, 0.219608, 1 )
+text = "0"
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="World_3" type="Node2D" parent="LevelSelect"]
+material = ExtResource( 11 )
+position = Vector2( 0, 12 )
+
+[node name="Level_01" type="AnimatedSprite" parent="LevelSelect/World_3"]
+use_parent_material = true
+position = Vector2( -60, 0 )
+frames = SubResource( 7 )
+script = ExtResource( 12 )
+index = 11
+
+[node name="CentreContainer" type="CenterContainer" parent="LevelSelect/World_3/Level_01"]
+use_parent_material = true
+margin_left = 1.0
+use_top_left = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="LevelSelect/World_3/Level_01/CentreContainer"]
+margin_left = -4.0
+margin_top = -5.0
+margin_right = 4.0
+margin_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+custom_styles/hover = SubResource( 11 )
+custom_styles/pressed = SubResource( 11 )
+custom_styles/focus = SubResource( 11 )
+custom_styles/disabled = SubResource( 11 )
+custom_styles/normal = SubResource( 11 )
+custom_fonts/font = SubResource( 10 )
+custom_colors/font_color = Color( 0.819608, 0.878431, 0.878431, 1 )
+custom_colors/font_color_hover = Color( 0.305882, 0.435294, 0.470588, 1 )
+custom_colors/font_color_pressed = Color( 0.12549, 0.145098, 0.168627, 1 )
+text = "0"
+
+[node name="Level_02" type="AnimatedSprite" parent="LevelSelect/World_3"]
+use_parent_material = true
+position = Vector2( -50, 0 )
+frames = SubResource( 7 )
+script = ExtResource( 12 )
+index = 12
+
+[node name="CentreContainer" type="CenterContainer" parent="LevelSelect/World_3/Level_02"]
+use_parent_material = true
+margin_left = 1.0
+use_top_left = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="LevelSelect/World_3/Level_02/CentreContainer"]
+margin_left = -4.0
+margin_top = -5.0
+margin_right = 4.0
+margin_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+custom_styles/hover = SubResource( 11 )
+custom_styles/pressed = SubResource( 11 )
+custom_styles/focus = SubResource( 11 )
+custom_styles/disabled = SubResource( 11 )
+custom_styles/normal = SubResource( 11 )
+custom_fonts/font = SubResource( 10 )
+custom_colors/font_color = Color( 0.819608, 0.878431, 0.878431, 1 )
+custom_colors/font_color_hover = Color( 0.305882, 0.435294, 0.470588, 1 )
+custom_colors/font_color_pressed = Color( 0.12549, 0.145098, 0.168627, 1 )
+text = "0"
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="Level_03" type="AnimatedSprite" parent="LevelSelect/World_3"]
+use_parent_material = true
+position = Vector2( -40, 0 )
+frames = SubResource( 7 )
+script = ExtResource( 12 )
+index = 13
+
+[node name="CentreContainer" type="CenterContainer" parent="LevelSelect/World_3/Level_03"]
+use_parent_material = true
+margin_left = 1.0
+use_top_left = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="LevelSelect/World_3/Level_03/CentreContainer"]
+margin_left = -4.0
+margin_top = -5.0
+margin_right = 4.0
+margin_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+custom_styles/hover = SubResource( 11 )
+custom_styles/pressed = SubResource( 11 )
+custom_styles/focus = SubResource( 11 )
+custom_styles/disabled = SubResource( 11 )
+custom_styles/normal = SubResource( 11 )
+custom_fonts/font = SubResource( 10 )
+custom_colors/font_color = Color( 0.819608, 0.878431, 0.878431, 1 )
+custom_colors/font_color_hover = Color( 0.305882, 0.435294, 0.470588, 1 )
+custom_colors/font_color_pressed = Color( 0.12549, 0.145098, 0.168627, 1 )
+text = "0"
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="Level_04" type="AnimatedSprite" parent="LevelSelect/World_3"]
+use_parent_material = true
+position = Vector2( -30, 0 )
+frames = SubResource( 7 )
+script = ExtResource( 12 )
+index = 14
+
+[node name="CentreContainer" type="CenterContainer" parent="LevelSelect/World_3/Level_04"]
+use_parent_material = true
+margin_left = 1.0
+use_top_left = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="LevelSelect/World_3/Level_04/CentreContainer"]
+margin_left = -4.0
+margin_top = -5.0
+margin_right = 4.0
+margin_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+custom_styles/hover = SubResource( 11 )
+custom_styles/pressed = SubResource( 11 )
+custom_styles/focus = SubResource( 11 )
+custom_styles/disabled = SubResource( 11 )
+custom_styles/normal = SubResource( 11 )
+custom_fonts/font = SubResource( 10 )
+custom_colors/font_color = Color( 0.819608, 0.878431, 0.878431, 1 )
+custom_colors/font_color_hover = Color( 0.305882, 0.435294, 0.470588, 1 )
+custom_colors/font_color_pressed = Color( 0.12549, 0.145098, 0.168627, 1 )
+text = "0"
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="Level_05" type="AnimatedSprite" parent="LevelSelect/World_3"]
+use_parent_material = true
+position = Vector2( -20, 0 )
+frames = SubResource( 7 )
+script = ExtResource( 12 )
+index = 15
+
+[node name="CentreContainer" type="CenterContainer" parent="LevelSelect/World_3/Level_05"]
+use_parent_material = true
+margin_left = 1.0
+use_top_left = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="LevelSelect/World_3/Level_05/CentreContainer"]
+margin_left = -4.0
+margin_top = -5.0
+margin_right = 4.0
+margin_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+custom_styles/hover = SubResource( 11 )
+custom_styles/pressed = SubResource( 11 )
+custom_styles/focus = SubResource( 11 )
+custom_styles/disabled = SubResource( 11 )
+custom_styles/normal = SubResource( 11 )
+custom_fonts/font = SubResource( 10 )
+custom_colors/font_color = Color( 0.819608, 0.878431, 0.878431, 1 )
+custom_colors/font_color_hover = Color( 0.305882, 0.435294, 0.470588, 1 )
+custom_colors/font_color_pressed = Color( 0.12549, 0.145098, 0.168627, 1 )
+text = "0"
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="Back" type="CenterContainer" parent="LevelSelect"]
+use_parent_material = true
+margin_left = -40.0
+margin_top = 32.0
+margin_right = -40.0
+margin_bottom = 32.0
+use_top_left = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="LevelSelect/Back"]
+use_parent_material = true
+margin_left = -16.0
+margin_top = -5.0
+margin_right = 16.0
+margin_bottom = 5.0
+focus_neighbour_bottom = NodePath("../../Options/Button")
+custom_styles/hover = SubResource( 3 )
+custom_styles/pressed = SubResource( 3 )
+custom_styles/focus = SubResource( 3 )
+custom_styles/disabled = SubResource( 3 )
+custom_styles/normal = SubResource( 3 )
+custom_fonts/font = SubResource( 4 )
+text = "BACK"
+script = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="focus_entered" from="Main/Play/Button" to="Main/Play/Button" method="focus_entered"]
+[connection signal="focus_exited" from="Main/Play/Button" to="Main/Play/Button" method="focus_exited"]
+[connection signal="mouse_entered" from="Main/Play/Button" to="Main/Play/Button" method="mouse_entered"]
+[connection signal="mouse_exited" from="Main/Play/Button" to="Main/Play/Button" method="mouse_exited"]
+[connection signal="pressed" from="Main/Play/Button" to="." method="play_pressed"]
+[connection signal="focus_entered" from="Main/LevelSelect/Button" to="Main/LevelSelect/Button" method="focus_entered"]
+[connection signal="focus_exited" from="Main/LevelSelect/Button" to="Main/LevelSelect/Button" method="focus_exited"]
+[connection signal="mouse_entered" from="Main/LevelSelect/Button" to="Main/LevelSelect/Button" method="mouse_entered"]
+[connection signal="mouse_exited" from="Main/LevelSelect/Button" to="Main/LevelSelect/Button" method="mouse_exited"]
+[connection signal="pressed" from="Main/LevelSelect/Button" to="." method="level_select_pressed"]
+[connection signal="focus_entered" from="Main/Exit/Button" to="Main/Exit/Button" method="focus_entered"]
+[connection signal="focus_exited" from="Main/Exit/Button" to="Main/Exit/Button" method="focus_exited"]
+[connection signal="mouse_entered" from="Main/Exit/Button" to="Main/Exit/Button" method="mouse_entered"]
+[connection signal="mouse_exited" from="Main/Exit/Button" to="Main/Exit/Button" method="mouse_exited"]
+[connection signal="pressed" from="Main/Exit/Button" to="." method="exit_pressed"]
+[connection signal="select_level" from="LevelSelect/World_1/Level_01" to="." method="select_level"]
+[connection signal="pressed" from="LevelSelect/World_1/Level_01/CentreContainer/Button" to="LevelSelect/World_1/Level_01" method="_on_Button_pressed"]
+[connection signal="select_level" from="LevelSelect/World_1/Level_02" to="." method="select_level"]
+[connection signal="pressed" from="LevelSelect/World_1/Level_02/CentreContainer/Button" to="LevelSelect/World_1/Level_02" method="_on_Button_pressed"]
+[connection signal="select_level" from="LevelSelect/World_1/Level_03" to="." method="select_level"]
+[connection signal="pressed" from="LevelSelect/World_1/Level_03/CentreContainer/Button" to="LevelSelect/World_1/Level_03" method="_on_Button_pressed"]
+[connection signal="select_level" from="LevelSelect/World_1/Level_04" to="." method="select_level"]
+[connection signal="pressed" from="LevelSelect/World_1/Level_04/CentreContainer/Button" to="LevelSelect/World_1/Level_04" method="_on_Button_pressed"]
+[connection signal="select_level" from="LevelSelect/World_1/Level_05" to="." method="select_level"]
+[connection signal="pressed" from="LevelSelect/World_1/Level_05/CentreContainer/Button" to="LevelSelect/World_1/Level_05" method="_on_Button_pressed"]
+[connection signal="select_level" from="LevelSelect/World_2/Level_01" to="." method="select_level"]
+[connection signal="pressed" from="LevelSelect/World_2/Level_01/CentreContainer/Button" to="LevelSelect/World_2/Level_01" method="_on_Button_pressed"]
+[connection signal="select_level" from="LevelSelect/World_2/Level_02" to="." method="select_level"]
+[connection signal="pressed" from="LevelSelect/World_2/Level_02/CentreContainer/Button" to="LevelSelect/World_2/Level_02" method="_on_Button_pressed"]
+[connection signal="select_level" from="LevelSelect/World_2/Level_03" to="." method="select_level"]
+[connection signal="pressed" from="LevelSelect/World_2/Level_03/CentreContainer/Button" to="LevelSelect/World_2/Level_03" method="_on_Button_pressed"]
+[connection signal="select_level" from="LevelSelect/World_2/Level_04" to="." method="select_level"]
+[connection signal="pressed" from="LevelSelect/World_2/Level_04/CentreContainer/Button" to="LevelSelect/World_2/Level_04" method="_on_Button_pressed"]
+[connection signal="select_level" from="LevelSelect/World_2/Level_05" to="." method="select_level"]
+[connection signal="pressed" from="LevelSelect/World_2/Level_05/CentreContainer/Button" to="LevelSelect/World_2/Level_05" method="_on_Button_pressed"]
+[connection signal="select_level" from="LevelSelect/World_3/Level_01" to="." method="select_level"]
+[connection signal="pressed" from="LevelSelect/World_3/Level_01/CentreContainer/Button" to="LevelSelect/World_3/Level_01" method="_on_Button_pressed"]
+[connection signal="select_level" from="LevelSelect/World_3/Level_02" to="." method="select_level"]
+[connection signal="pressed" from="LevelSelect/World_3/Level_02/CentreContainer/Button" to="LevelSelect/World_3/Level_02" method="_on_Button_pressed"]
+[connection signal="select_level" from="LevelSelect/World_3/Level_03" to="." method="select_level"]
+[connection signal="pressed" from="LevelSelect/World_3/Level_03/CentreContainer/Button" to="LevelSelect/World_3/Level_03" method="_on_Button_pressed"]
+[connection signal="select_level" from="LevelSelect/World_3/Level_04" to="." method="select_level"]
+[connection signal="pressed" from="LevelSelect/World_3/Level_04/CentreContainer/Button" to="LevelSelect/World_3/Level_04" method="_on_Button_pressed"]
+[connection signal="select_level" from="LevelSelect/World_3/Level_05" to="." method="select_level"]
+[connection signal="pressed" from="LevelSelect/World_3/Level_05/CentreContainer/Button" to="LevelSelect/World_3/Level_05" method="_on_Button_pressed"]
+[connection signal="focus_entered" from="LevelSelect/Back/Button" to="LevelSelect/Back/Button" method="focus_entered"]
+[connection signal="focus_exited" from="LevelSelect/Back/Button" to="LevelSelect/Back/Button" method="focus_exited"]
+[connection signal="mouse_entered" from="LevelSelect/Back/Button" to="LevelSelect/Back/Button" method="mouse_entered"]
+[connection signal="mouse_exited" from="LevelSelect/Back/Button" to="LevelSelect/Back/Button" method="mouse_exited"]
+[connection signal="pressed" from="LevelSelect/Back/Button" to="." method="back_pressed"]

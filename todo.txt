@@ -1,0 +1,15 @@
+[ ] Fix win condition bug
+
+[X] Music
+[X] Level select
+[X] More levels
+[X] Sound effects
+[X] More palettes
+[?] Check if pushed can be moved when connected to magnet
+[ ] Background ???
+[X] Compress music
+
+[X] Name
+    - Boxstrosity
+
+ 

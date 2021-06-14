@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=2]
+
+[ext_resource path="res://shaders/cube.shader" type="Shader" id=1]
+[ext_resource path="res://palettes/forest.png" type="Texture" id=2]
+
+[resource]
+shader = ExtResource( 1 )
+shader_param/color_scaler = 0.42
+shader_param/palette = ExtResource( 2 )

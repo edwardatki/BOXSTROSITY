@@ -1,0 +1,71 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://scripts/mover.gd" type="Script" id=1]
+[ext_resource path="res://sprites/player_up.png" type="Texture" id=2]
+[ext_resource path="res://scripts/mover_sprite.gd" type="Script" id=4]
+
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=11]
+atlas = ExtResource( 2 )
+region = Rect2( 48, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=9]
+atlas = ExtResource( 2 )
+region = Rect2( 32, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=10]
+atlas = ExtResource( 2 )
+region = Rect2( 16, 0, 16, 16 )
+
+[sub_resource type="SpriteFrames" id=5]
+animations = [ {
+"frames": [ SubResource( 8 ) ],
+"loop": true,
+"name": "default",
+"speed": 0.0
+}, {
+"frames": [ SubResource( 11 ) ],
+"loop": false,
+"name": "move_and_grabbed",
+"speed": 0.0
+}, {
+"frames": [ SubResource( 9 ) ],
+"loop": true,
+"name": "grabbed",
+"speed": 0.0
+}, {
+"frames": [ SubResource( 10 ) ],
+"loop": true,
+"name": "move",
+"speed": 0.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 8, 8 )
+
+[node name="Mover" type="KinematicBody2D" groups=[
+"grabbable",
+"mover",
+"player_controlled",
+"pushable",
+]]
+use_parent_material = true
+z_index = 1
+script = ExtResource( 1 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+use_parent_material = true
+frames = SubResource( 5 )
+playing = true
+script = ExtResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource( 6 )
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+visible = false
+cast_to = Vector2( 0, 0 )
